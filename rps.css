@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: Frijole;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 550px;
+  width: 75%;
+  margin: auto;
+}
+
+.title, .players {
+  font-family: Frijole;
+}
+
+.title, .players, .scores, .selections, .play, #result {
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  width: 75px;
+  padding: 5px 6px;
+}

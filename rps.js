@@ -1,77 +1,86 @@
 const validChoices = ["ROCK","PAPER","SCISSORS"];
-let playerScore;
-let computerScore;
-function getComputerChoice() {
-  const computerSelection = validChoices[Math.floor(Math.random() * validChoices.length)];
-  return computerSelection;
-}
+let playerScore = 0;
+let computerScore = 0;
+let resultMessage = "";
+let gameInProgress = false;
+const play = document.querySelector("#play");
+const result = document.querySelector("#result");
+const player = document.querySelector("#player-score");
+const computer = document.querySelector("#computer-score");
+const selections = document.querySelectorAll(".selections button");
+play.addEventListener("click", startGame);
+selections.forEach(selection => selection.addEventListener("click", playRound));
 
-function getPlayerChoice() {
-  let validChoice = false;
-  let playerSelection;
-  do {
-    playerSelection = prompt("Choose 1: Rock. Paper or Scissors?").toUpperCase();
-    validChoice = validChoices.includes(playerSelection);
-  } while (!validChoice);
-  return playerSelection;
-}
-
-function playRound(playerChoice, computerChoice) {
-  console.log("Player: " + playerChoice + "; Computer: " + computerChoice);
+function playRound(e) {
+  const playerChoice = this.id.toUpperCase();
+  const computerChoice = validChoices[Math.floor(Math.random() * validChoices.length)];
   switch(playerChoice) {
     case "ROCK":
       if (computerChoice == "SCISSORS") {
         playerScore++;
-        return "You Win! Rock beats Scissors";
+        resultMessage = "You Win! Rock beats Scissors";
       }
       if (computerChoice == "PAPER") {
         computerScore++;
-        return "You Lose! Paper beats Rock";
+        resultMessage = "You Lose! Paper beats Rock";
       }
       if (computerChoice == "ROCK") {
-        return "It's a Draw!";
+        resultMessage = "It's a Draw!";
       }
+      break;
     case "PAPER":
       if (computerChoice == "ROCK") {
         playerScore++;
-        return "You Win! Paper beats Rock";
+        resultMessage = "You Win! Paper beats Rock";
       }
       if (computerChoice == "SCISSORS") {
         computerScore++;
-        return "You Lose! Scissors beats Paper";
+        resultMessage = "You Lose! Scissors beats Paper";
       }
       if (computerChoice == "PAPER") {
-        return "It's a Draw!";
+        resultMessage = "It's a Draw!";
       }
+      break;
     case "SCISSORS":
       if (computerChoice == "PAPER") {
         playerScore++;
-        return "You Win! Scissors beats Paper ";
+        resultMessage = "You Win! Scissors beats Paper ";
       }
       if (computerChoice == "ROCK") {
         computerScore++;
-        return "You Lose! Rock beats Scissors";
+        resultMessage = "You Lose! Rock beats Scissors";
       }
       if (computerChoice == "SCISSORS") {
-        return "It's a Draw!";
+        resultMessage = "It's a Draw!";
       }
+      break;
+  }
+  player.textContent = playerScore;
+  computer.textContent = computerScore;
+  result.textContent = resultMessage;
+  if (playerScore == 5 || computerScore == 5) {
+    endGame(playerScore, computerScore);
   }
 }
 
-function game() {
+function startGame(e) {
   playerScore = 0;
   computerScore = 0;
-  let result = "";
-  for (i = 1; i <= 5 ; i++) {
-    result = playRound(getPlayerChoice(),getComputerChoice());
-  }
-  console.log("Player Score: " + playerScore);
-  console.log("Computer Score: " + computerScore);
-  if (playerScore > computerScore) {
-    console.log("Player wins");
-  } else if (playerScore < computerScore) {
-    console.log("Computer wins");
+  resultMessage = "";
+  gameInProgress = true;
+  player.textContent = playerScore;
+  computer.textContent = computerScore;
+  result.textContent = resultMessage;
+}
+
+function endGame (player, computer) {
+  if (player > computer) {
+    resultMessage = "Player wins: " + player + " to " + computer;
+  } else if (player < computer) {
+    resultMessage = "Player loses: " + player + " to " + computer;
   } else {
-    console.log("It's a Draw!");
+    resultMessage = "It's a draw: " + player + " to " + computer;
   }
+  result.innerHTML = resultMessage;
+  gameInProgress = false;
 }
