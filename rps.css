@@ -14,7 +14,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 550px;
+  height: 100%;
   width: 75%;
   margin: auto;
 }
@@ -28,6 +28,12 @@ body {
   justify-content: space-around;
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px;
+}
 button {
   width: 75px;
   padding: 5px 6px;

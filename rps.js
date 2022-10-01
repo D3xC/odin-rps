@@ -1,7 +1,7 @@
 const validChoices = ["ROCK","PAPER","SCISSORS"];
 let playerScore = 0;
 let computerScore = 0;
-let resultMessage = "";
+let resultMessage = "Press Start to Play";
 let gameInProgress = false;
 const play = document.querySelector("#play");
 const result = document.querySelector("#result");
@@ -66,21 +66,27 @@ function playRound(e) {
 function startGame(e) {
   playerScore = 0;
   computerScore = 0;
-  resultMessage = "";
+  resultMessage = "Choose Your Weapon";
   gameInProgress = true;
   player.textContent = playerScore;
   computer.textContent = computerScore;
   result.textContent = resultMessage;
+  play.removeEventListener("click", startGame);
+  play.textContent = "Reset"
+  play.addEventListener("click", endGame);
 }
 
-function endGame (player, computer) {
-  if (player > computer) {
-    resultMessage = "Player wins: " + player + " to " + computer;
-  } else if (player < computer) {
-    resultMessage = "Player loses: " + player + " to " + computer;
+function endGame () {
+  if (playerScore > computerScore) {
+    resultMessage = "Player wins: " + playerScore + " to " + computerScore;
+  } else if (playerScore < computerScore) {
+    resultMessage = "Player loses: " + playerScore + " to " + computerScore;
   } else {
-    resultMessage = "It's a draw: " + player + " to " + computer;
+    resultMessage = "It's a draw: " + playerScore + " to " + computerScore;
   }
-  result.innerHTML = resultMessage;
+  result.textContent = resultMessage;
   gameInProgress = false;
+  play.removeEventListener("click", endGame);
+  play.textContent = "Start"
+  play.addEventListener("click", startGame);
 }
